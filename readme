@@ -1,0 +1,163 @@
+# SQL Subset to Relational Algebra Translator
+
+## Overview
+
+This project translates a restricted subset of SQL queries into equivalent Relational Algebra (RA) expressions using **Flex** (lexical analysis) and **Bison** (syntax analysis + translation).
+Queries are read from a text file, processed sequentially, and their corresponding RA expressions are printed.
+
+---
+
+## Process Flow
+
+1. **Input**
+
+   * Queries are read line-by-line from `queries.txt`
+   * Each line contains one SQL query ending with `;`
+
+2. **Lexical Analysis (Flex)**
+
+   * SQL keywords, identifiers, operators, and symbols are tokenized
+   * Example tokens: `SELECT`, `FROM`, `WHERE`, `IDENTIFIER`, `NUMBER`, `GT`, `AND`
+
+3. **Syntax Analysis (Bison)**
+
+   * Token stream is matched against SQL subset grammar
+   * Valid structure:
+
+     ```
+     SELECT <attr_list>
+     FROM <table_list>
+     [WHERE <condition>];
+     ```
+
+4. **Semantic Analysis**
+
+   * Tables and attributes validated against `schema.txt`
+   * Errors reported for:
+
+     * undefined table
+     * undefined attribute
+
+5. **Relational Algebra Generation**
+   Mapping:
+
+   * SELECT → `pi`
+   * WHERE → `sigma`
+   * multiple tables → `X`
+   * AND / OR preserved
+
+6. **Output**
+
+   * RA expression printed for each query
+
+---
+
+## Example
+
+### Input (`queries.txt`)
+
+```
+SELECT name FROM Student WHERE age > 20;
+SELECT * FROM Employee;
+```
+
+### Output
+
+```
+pi_name ( sigma_age>20 ( Student ) )
+Employee
+```
+
+---
+
+## Supported SQL Features
+
+* SELECT clause
+* FROM clause (single or multiple tables)
+* Optional WHERE clause
+* AND / OR conditions
+* Comparison operators
+  `=  <  >  <=  >=  !=`
+* SELECT *
+* Multiple attributes in projection
+* Multiple queries from file
+
+---
+
+## File Structure
+
+```
+lexer.l        → lexical analyzer
+parser.y       → grammar + RA translation
+semantic.c     → semantic checks
+schema.h       → schema definitions
+schema.txt     → table & attribute list
+queries.txt    → input queries
+```
+
+---
+
+## Compilation
+
+```
+bison -d parser.y
+flex lexer.l
+gcc parser.tab.c lex.yy.c semantic.c -o sql2ra
+```
+
+---
+
+## Execution
+
+```
+./sql2ra
+```
+
+---
+
+## Limitations
+
+* Only a **restricted SQL subset** is supported
+* No support for:
+
+  * JOIN syntax (`INNER JOIN`, etc.)
+  * GROUP BY
+  * HAVING
+  * ORDER BY
+  * DISTINCT
+  * aggregate functions (`COUNT`, `SUM`, etc.)
+  * nested queries
+  * subqueries
+  * aliases (`AS`)
+* Attribute validation checks existence but **does not verify table-attribute relationship**
+* Operator precedence for complex conditions may not be fully parenthesized
+* No query optimization (pure structural translation)
+* No explicit join operator (`⨝`); joins represented as Cartesian product + selection
+* Assumes one query per line in `queries.txt`
+
+---
+
+## Assumptions
+
+* Queries must end with `;`
+* Identifiers are case-sensitive
+* Schema must be defined in `schema.txt`
+* Input file must exist in the executable directory
+
+---
+
+## Process Diagram
+
+```
+queries.txt
+     ↓
+Lexical Analysis (Flex)
+     ↓
+Syntax Analysis (Bison)
+     ↓
+Semantic Validation
+     ↓
+RA Generation
+     ↓
+Output (Relational Algebra)
+```

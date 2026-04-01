@@ -1,0 +1,4 @@
+Student id name age dept
+Employee id ename salary dept
+Dept dept location
+Course cid cname credits

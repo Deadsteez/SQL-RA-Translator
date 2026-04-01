@@ -1,0 +1,6 @@
+bison -d parser.y
+flex lexer.l
+gcc parser.tab.c lex.yy.c -o sql2ra.exe
+./sql2ra
+
+SELECT name FROM Student WHERE age > 20;
