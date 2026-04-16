@@ -1,85 +1,37 @@
-SELECT * FROM Employee;
+SELECT * FROM Student;
 
-SELECT location FROM Dept;
-
-SELECT ename FROM Employee;
+SELECT name FROM Student;
 
 SELECT id,name FROM Student;
 
-SELECT cname FROM Course;
-
-SELECT name FROM Student WHERE age > 20;
-
-SELECT ename FROM Employee WHERE salary > 30000;
-
-SELECT location FROM Dept WHERE location = location;
-
-SELECT cname FROM Course WHERE cid > 100;
+SELECT * FROM Student WHERE age > 18;
 
 SELECT * FROM Student WHERE age >= 18;
 
-SELECT * FROM Employee WHERE salary <= 50000;
+SELECT * FROM Student WHERE age <= 25;
 
-SELECT * FROM Dept WHERE location != location;
-
-SELECT id FROM Student WHERE age > 18 AND age < 25;
-
-SELECT ename FROM Employee WHERE salary > 20000 AND salary < 60000;
-
-SELECT cname FROM Course WHERE cid > 10 OR cid < 5;
-
-SELECT * FROM Student,Dept;
-
-SELECT * FROM Employee,Dept;
-
-SELECT name FROM Student,Dept WHERE dept = dept;
-
-SELECT ename FROM Employee,Dept WHERE dept = dept;
-
-SELECT * FROM Student,Employee WHERE id = id;
-
-SELECT id FROM Student WHERE age = 20;
-
-SELECT ename FROM Employee WHERE salary = 40000;
-
-SELECT cname FROM Course WHERE cid < 50;
-
-SELECT * FROM Dept;
-
-SELECT location FROM Dept;
-
-SELECT * FROM Course;
-
-SELECT * FROM Course WHERE cid > 5;
-
-SELECT name FROM Student WHERE age > 20 AND age < 30;
-
-SELECT ename FROM Employee WHERE salary > 20000 OR salary < 10000;
-
-SELECT * FROM Student WHERE age > 10 OR age < 5;
-
-SELECT * FROM Employee WHERE salary >= 25000;
-
-SELECT * FROM Course WHERE cid <= 200;
+SELECT * FROM Student WHERE age = 21;
 
 SELECT * FROM Student WHERE age != 22;
 
-SELECT * FROM Employee WHERE salary != 35000;
+SELECT name FROM Student WHERE age > 18 AND age < 25;
 
-SELECT name FROM Student,Course;
+SELECT name FROM Student WHERE age > 20 OR age < 5;
 
-SELECT cname FROM Course,Dept;
+SELECT * FROM Student,Dept;
 
-SELECT * FROM Student,Course WHERE cid = cid;
+SELECT name FROM Student,Dept WHERE dept = dept;
 
-SELECT * FROM Employee,Course WHERE cid = cid;
+SELECT pname FROM Project,Dept WHERE deptid = dept;
 
 SELECT id FROM Student WHERE height > 170;
-
-SELECT salary FROM Student WHERE age > 20;
 
 SELECT xyz FROM Dept;
 
 SELECT * FROM Unknown;
 
-SELECT cname FROM Course WHERE unknown > 10;
+SELECT name FROM Student WHERE unknown > 10;
+
+SELECT name FROM Student WHERE age > 18
+
+SELECT name FROM Student WHERE age > @18;

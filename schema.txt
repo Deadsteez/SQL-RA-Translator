@@ -2,3 +2,7 @@ Student id name age dept
 Employee id ename salary dept
 Dept dept location
 Course cid cname credits
+Library bid title author year
+Hospital pid pname disease docid
+Doctor docid dname specialization
+Project pid pname budget deptid
