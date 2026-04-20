@@ -111,9 +111,7 @@ gcc parser.tab.c lex.yy.c semantic.c -o sql2ra
 
 ```
 ./sql2ra
-```
 
----
 
 ## Limitations
 

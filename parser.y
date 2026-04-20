@@ -16,7 +16,7 @@ static int query_has_error = 0;
 }
 
 %token STAR
-%token SELECT FROM WHERE AND OR
+%token SELECT FROM WHERE AND OR JOIN ON
 %token EQ GT LT GE LE NE
 %token COMMA SEMICOLON LPAREN RPAREN
 %token <str> IDENTIFIER NUMBER
@@ -50,6 +50,31 @@ query:
                 snprintf(ra, sizeof(ra), "%s", $4);
             else
                 snprintf(ra, sizeof(ra), "%s_%s ( %s )", SYM_PI, $2, $4);
+            printf(CLR_GREEN "  RA Expression : " CLR_RESET CLR_BOLD "%s" CLR_RESET "\n", ra);
+            ra_validate(ra);
+            stat_ok++;
+        }
+    }
+    | SELECT attr_list FROM IDENTIFIER JOIN IDENTIFIER ON condition SEMICOLON
+    {
+        if(!query_has_error) {
+            if(!table_exists($4)) {
+                printf(CLR_RED "  Semantic Error: Table '%s' not defined\n" CLR_RESET, $4);
+                query_has_error = 1; stat_err++;
+            }
+            if(!table_exists($6)) {
+                printf(CLR_RED "  Semantic Error: Table '%s' not defined\n" CLR_RESET, $6);
+                query_has_error = 1; stat_err++;
+            }
+        }
+        if(!query_has_error) {
+            char ra[512];
+            char tables[256];
+            snprintf(tables, sizeof(tables), "%s %s %s", $4, SYM_CROSS, $6);
+            if(strcmp($2,"*")==0)
+                snprintf(ra, sizeof(ra), "%s_%s ( %s )", SYM_SIGMA, $8, tables);
+            else
+                snprintf(ra, sizeof(ra), "%s_%s ( %s_%s ( %s ) )", SYM_PI, $2, SYM_SIGMA, $8, tables);
             printf(CLR_GREEN "  RA Expression : " CLR_RESET CLR_BOLD "%s" CLR_RESET "\n", ra);
             ra_validate(ra);
             stat_ok++;

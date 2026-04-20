@@ -10,6 +10,8 @@
 "SELECT"            { return SELECT; }
 "FROM"              { return FROM; }
 "WHERE"             { return WHERE; }
+"JOIN"              { return JOIN; }
+"ON"                { return ON; }
 
 "AND"               { return AND; }
 "OR"                { return OR; }

@@ -24,6 +24,14 @@ SELECT name FROM Student,Dept WHERE dept = dept;
 
 SELECT pname FROM Project,Dept WHERE deptid = dept;
 
+SELECT * FROM Student JOIN Dept ON dept = dept;
+
+SELECT name FROM Student JOIN Dept ON dept = dept;
+
+SELECT ename FROM Employee JOIN Dept ON dept = dept;
+
+SELECT pname FROM Project JOIN Dept ON deptid = dept;
+
 SELECT id FROM Student WHERE height > 170;
 
 SELECT xyz FROM Dept;
